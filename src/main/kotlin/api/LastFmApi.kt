@@ -6,10 +6,10 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-const val apiKey = "ed8930baf8d046bb022e0059880ca274"
-const val baseUrl = "http://ws.audioscrobbler.com/2.0"
+private const val apiKey = "ed8930baf8d046bb022e0059880ca274"
+private const val baseUrl = "http://ws.audioscrobbler.com/2.0"
 
-const val userEndpoint = "user.getInfo"
+private const val userEndpoint = "user.getInfo"
 
 class LastFmApi {
 
