@@ -1,17 +1,17 @@
+import api.ChartItem
 import api.LastFmApi
 import java.time.LocalDateTime
 
-class SeasonsAggregator (
+class SeasonsService (
     val api: LastFmApi
 ){
     /**
      * Extract every season from every year that user has been active for
      */
-    fun getAllSeasonsForUser(username: String) {
+    fun getAllSeasonsForUser(username: String): List<YearSeason> {
         val registeredTimestamp = api.getUser(username).registered.timestamp
         val registeredDate = dateToTimestamp(registeredTimestamp)
-        val list = getListOfSeasonsBetweenDates(registeredDate, LocalDateTime.now())
-        print(list)
+        return getListOfSeasonsBetweenDates(registeredDate, LocalDateTime.now())
     }
 
 
@@ -25,5 +25,6 @@ class SeasonsAggregator (
         }
         return seasons
     }
+
 
 }

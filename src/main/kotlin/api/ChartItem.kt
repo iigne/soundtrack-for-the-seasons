@@ -12,7 +12,7 @@ data class ChartItem(
     @JsonProperty("mbid")
     val id: String,
     val name: String,
-    val playcount: Int,
+    var playcount: Int,
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
