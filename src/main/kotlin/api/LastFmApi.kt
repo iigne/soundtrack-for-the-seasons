@@ -8,19 +8,18 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-private const val apiKey = "ed8930baf8d046bb022e0059880ca274"
 private const val baseUrl = "http://ws.audioscrobbler.com/2.0"
 
-private const val userEndpoint = "user.getInfo"
-
-class LastFmApi {
+class LastFmApi(
+    val apiKey: String,
+) {
 
     companion object {
         const val RATE_LIMIT_MS = 1000L
     }
 
     fun getUser(username: String): User {
-        val uri = buildUri(userEndpoint, username)
+        val uri = buildUri(Endpoint.USER, username)
         val response = callApi(uri)
 
         val mapper = jacksonObjectMapper().reader().withRootName("user")
@@ -28,7 +27,7 @@ class LastFmApi {
     }
 
     fun getChart(type: ChartType, username: String, from: String?, to: String?, limit: Int? = 15): ChartList {
-        val uri = buildUri(type.method, username, from, to, limit)
+        val uri = buildUri(type.endpoint, username, from, to, limit)
         val response = callApi(uri)
         val mapper = jacksonObjectMapper().reader().withRootName(type.jsonWrapperRoot)
         return mapper.readValue(response.body(), ChartList::class.java)
@@ -39,13 +38,15 @@ class LastFmApi {
         val seasonsCharts: MutableMap<YearSeason, ChartList> = mutableMapOf()
         seasons.forEach {
             sleep(RATE_LIMIT_MS)
-            seasonsCharts[it] = getChart(type, username, it.seasonStartTimestamp.toString(), it.seasonEndTimestamp.toString(), limit)
+            seasonsCharts[it] =
+                getChart(type, username, it.seasonStartTimestamp.toString(), it.seasonEndTimestamp.toString(), limit)
         }
         return seasonsCharts
     }
 
     private fun callApi(uri: URI): HttpResponse<String> {
-        println("URI: $uri")
+        //TODO need a proper logger for this, this is more like debug log
+        println("Calling URI: $uri")
         val client = HttpClient.newBuilder().build()
         val request = HttpRequest.newBuilder()
             .uri(uri)
@@ -56,18 +57,17 @@ class LastFmApi {
         return response
     }
 
-    fun buildUri(method: String, username: String, from: String? = null, to: String? = null, limit: Int? = null): URI =
-        URI.create(
-            """
-        $baseUrl/?
-        method=$method&
-        user=$username&
-        api_key=$apiKey&
-        format=json&
-        ${"from=$from&".useIf(from != null)}
-        ${"to=$to&".useIf(to != null)}
-        ${"limit=$limit&".useIf(limit != null)}
-    """.trimIndent().replace("\n", "")
+    fun buildUri(endpoint: Endpoint, username: String, from: String? = null, to: String? = null, limit: Int? = null): URI =
+        URI.create("""
+            $baseUrl/?
+            method=${endpoint.method}&
+            user=$username&
+            api_key=$apiKey&
+            format=json&
+            ${"from=$from&".useIf(from != null)}
+            ${"to=$to&".useIf(to != null)}
+            ${"limit=$limit&".useIf(limit != null)}
+        """.trimIndent().replace("\n", "")
         )
 
     private fun String.useIf(condition: Boolean) = if (condition) this else ""
