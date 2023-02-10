@@ -37,7 +37,7 @@ class LastFmApi(
             Map<YearSeason, ChartList> {
         val seasonsCharts: MutableMap<YearSeason, ChartList> = mutableMapOf()
         seasons.forEach {
-            sleep(RATE_LIMIT_MS)
+            sleep(RATE_LIMIT_MS) //TODO this should be handled somewhere else...
             seasonsCharts[it] =
                 getChart(type, username, it.seasonStartTimestamp.toString(), it.seasonEndTimestamp.toString(), limit)
         }
@@ -57,7 +57,7 @@ class LastFmApi(
         return response
     }
 
-    fun buildUri(endpoint: Endpoint, username: String, from: String? = null, to: String? = null, limit: Int? = null): URI =
+    private fun buildUri(endpoint: Endpoint, username: String, from: String? = null, to: String? = null, limit: Int? = null): URI =
         URI.create("""
             $baseUrl/?
             method=${endpoint.method}&

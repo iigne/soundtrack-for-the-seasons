@@ -60,21 +60,28 @@ Format is JSON that looks like:
 
 ## Next steps
 
-* Refactoring
-* Testing
+- [ ] Select season
+- [ ] Testing
+- [ ] Refactoring + resolve TODOs
+- [ ]  Turn this into API?
+     -  OR this could be a lambda function + API gateway
+- [ ]  Add a FE
+     - [ ] charts response needs to have some image URL (especially for albums) 
+     - could be a React type thing or just a simple HTML page?
+- [ ]  Deploy this somewhere (like AWS)
+    - This was build with AWS Lambdas in mind, sorta
+    - FE can be a simple thingy hosted from S3 bucket
+
+## Future work
 * Improve the season aggregation algorithm
-    * Currently, it's tooooooo primitive
-    * Should exclude items that are too general (occur in high positions in every season and every year)
-    * Should include items that are number 1 in a specific year
+  * Currently, it's too primitive - only based on highest playcounts between all music listened to between start and end of season
+  * Should introduce some scoring system?
+  * Should exclude items that are too general (occur in high positions in every season and every year)
+  * Should include items that are number 1 in a specific year
+  * Handle start and end of seasons - start and end chart data is not as relevant as mid-season
 * Make this more general-purpose
-    * Could use this to generate non-aggregated stats for every year 
-    * Personal Christmas playlists if we only did songs around December!
-* Make this more than just a CLI tool - add a little frontend
-    * this needs to be an API then?
-    * also, charts response needs to have some image URL (especially for albums) 
-* Deploy this somewhere (like AWS)
-    * This was build with AWS Lambdas in mind, sorta
-    * FE can be a simple thingy hosted from S3 bucket
+  * Could use this to generate non-aggregated stats for every year
+  * Personal Christmas playlists if we only did songs around December!
 * Integration with Spotify
-    * It would be cool to generate playlists!!!
-    * This would need FE - but clicking on some album/track/artist could redirect to spotify page
+  * It would be cool to generate playlists!!!
+  * This would need FE - but clicking on some album/track/artist could redirect to spotify page

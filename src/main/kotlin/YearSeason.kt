@@ -1,6 +1,7 @@
 import java.time.LocalDateTime
 import java.time.Year
 
+//TODO omg please refactor this class
 data class YearSeason(
     val date: LocalDateTime,
     val season: Season = getSeasonForDate(date),
