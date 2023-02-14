@@ -19,10 +19,14 @@ export LAST_FM_API_KEY="<your api key>"
 ./gradlew build
 ```
 
-4. Run and provide username in `args`, for example:
+4. Provide `args` in expected format (documented in [Main.kt]) and run. For example:
 
 ```shell
 ./gradlew run --args="iigne"
+```
+or
+```shell
+./gradlew run --args="iigne 5 TRACK"
 ```
 
 Output contains entry for each season and a list of most listened to items in that season,
@@ -60,9 +64,9 @@ Format is JSON that looks like:
 
 ## Next steps
 
-- [ ] Select season
 - [ ] Testing
 - [ ] Refactoring + resolve TODOs
+- [ ] Select season
 - [ ]  Turn this into API?
      -  OR this could be a lambda function + API gateway
 - [ ]  Add a FE

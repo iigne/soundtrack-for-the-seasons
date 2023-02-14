@@ -52,8 +52,8 @@ class LastFmApi(
             .uri(uri)
             .build()
         val response = client.send(request, HttpResponse.BodyHandlers.ofString())
-        require(response.statusCode() == 200) { "Last.fm API did not return 200" }
         println("${response.statusCode()}: ${response.body()}")
+        require(response.statusCode() == 200) { "Last.fm API did not return 200" }
         return response
     }
 

@@ -2,9 +2,11 @@ import api.ChartType
 import api.LastFmApi
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
-//args expected format:
-// 0 - username
-// 1 - limit (optional)
+//args description:
+// 0 - username - of Last.fm user
+// 1 - limit (optional) - the higher the limit, the more items will be fetched for generating the stats,
+//      and more items will appear in the output list. Default limit is 15.
+// 2 - type (optional) - type of the stats. Can be either ALBUM, TRACK or ARTIST. Default type is ALBUM.
 const val DEFAULT_LIMIT = 15
 val DEFAULT_TYPE = ChartType.ALBUM
 fun main(args: Array<String>) {
@@ -12,8 +14,8 @@ fun main(args: Array<String>) {
     //resolve inputs
     val apiKey = getApiKey()
     val username = extractArg(args, 0)
-    val limit = extractArg(args, 1, DEFAULT_LIMIT)
-    val type = extractArg(args, 2, DEFAULT_TYPE)
+    val limit = extractIntArg(args, 1, DEFAULT_LIMIT)
+    val type = extractChartTypeArg(args, 2, DEFAULT_TYPE)
 
     println("args: username $username, limit $limit, type $type")
     //init services
@@ -22,9 +24,9 @@ fun main(args: Array<String>) {
     val seasonChartAggregationService = ChartAggregationService()
 
     // generate stats
-    val seasons = seasonsService.getAllSeasonsForUser(username)
+    val userSeasons = seasonsService.getAllSeasonsForUser(username)
 
-    val chart = api.getChartsForSeasons(type, username, seasons, limit)
+    val chart = api.getChartsForSeasons(type, username, userSeasons, limit)
     println("Every year seasons chart:")
     println(chart)
 
@@ -38,18 +40,16 @@ fun getApiKey(): String = System.getenv("LAST_FM_API_KEY")
     .also { require(it != null) { "Last.fm API key not provided" } }
 
 fun extractArg(args: Array<String>, index: Int, defaultVal: String? = null): String {
-    if (args.size - 1 >= index) {
-        return args[index]
-    }
-    require(!defaultVal.isNullOrEmpty()) { "Arg at position $index is not present and no default value given"}
-    return defaultVal
+    val extracted = extractArgOrNull(args, index) ?: defaultVal
+    require(extracted != null) { "Arg at position $index is not present and no default value given" }
+    return extracted
 }
 
-fun extractArg(args: Array<String>, index: Int): String =
-    extractArg(args, index, "")
+fun extractArgOrNull(args: Array<String>, index: Int): String? =
+    args[index].takeIf { args.size - 1 >= index }
 
-fun extractArg(args: Array<String>, index: Int, defaultVal: Int? = null): Int =
+fun extractIntArg(args: Array<String>, index: Int, defaultVal: Int? = null): Int =
     extractArg(args, index, defaultVal.toString()).toInt()
 
-fun extractArg(args: Array<String>, index: Int, defaultVal: ChartType? = null): ChartType =
+fun extractChartTypeArg(args: Array<String>, index: Int, defaultVal: ChartType? = null): ChartType =
     ChartType.valueOf(extractArg(args, index, defaultVal.toString()))
