@@ -19,7 +19,7 @@ export LAST_FM_API_KEY="<your api key>"
 ./gradlew build
 ```
 
-4. Provide `args` in expected format (documented in [Main.kt]) and run. For example:
+4. Provide `args` in expected format (documented in `Main.kt`) and run. For example:
 
 ```shell
 ./gradlew run --args="iigne"
@@ -30,7 +30,7 @@ or
 ```
 
 Output contains entry for each season and a list of most listened to items in that season,
-from highest to lowest, limited to 15 (currently - TODO).
+from highest to lowest.
 Format is JSON that looks like:
 
 ```json
