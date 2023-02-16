@@ -14,17 +14,3 @@ fun getSeasonForDate(date: LocalDateTime): Season {
     }
     throw IllegalStateException("Illegal date $date does not belong to a season? 🤨")
 }
-
-fun getSeasonStartYear(date: LocalDateTime): Int {
-    if (getSeasonForDate(date) == Season.SPRING) {
-        return date.year + 1
-    }
-    return date.year
-}
-
-fun getSeasonEndYear(date: LocalDateTime): Int {
-    if (getSeasonForDate(date) == Season.WINTER) {
-        return date.year + 1
-    }
-    return date.year
-}

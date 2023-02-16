@@ -14,7 +14,9 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    testImplementation("io.mockk:mockk:1.13.4")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 tasks.test {

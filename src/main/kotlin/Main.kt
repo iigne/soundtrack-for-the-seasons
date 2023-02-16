@@ -1,6 +1,7 @@
 import api.ChartType
 import api.LastFmApi
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import java.time.Clock
 
 //args description:
 // 0 - username - of Last.fm user
@@ -20,7 +21,7 @@ fun main(args: Array<String>) {
     println("args: username $username, limit $limit, type $type")
     //init services
     val api = LastFmApi(apiKey)
-    val seasonsService = SeasonsService(api)
+    val seasonsService = SeasonsService(api, Clock.systemDefaultZone())
     val seasonChartAggregationService = ChartAggregationService()
 
     // generate stats

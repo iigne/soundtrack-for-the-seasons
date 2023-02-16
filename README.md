@@ -65,6 +65,8 @@ Format is JSON that looks like:
 ## Next steps
 
 - [ ] Testing
+    - [x] `SeasonService`
+    - [ ] `ChartAggregationService`
 - [ ] Refactoring + resolve TODOs
 - [ ] Select season
 - [ ]  Turn this into API?
