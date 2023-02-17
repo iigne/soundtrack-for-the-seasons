@@ -4,6 +4,7 @@ import api.ChartList
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
+import kotlin.test.assertNotNull
 
 class ChartAggregationServiceTest {
 
@@ -21,31 +22,31 @@ class ChartAggregationServiceTest {
 
         assertEquals(4, aggregatedChart.size)
 
-        assertEquals(Season.SUMMER, aggregatedChart[0].season)
-        with(aggregatedChart[0].list) {
-            assertEquals(3, size)
+        assertNotNull(aggregatedChart[Season.SUMMER])
+        with(aggregatedChart[Season.SUMMER]) {
+            assertEquals(3, this!!.size)
             this[0].assertEquals(1010, "HAIM", "Days Are Gone", "0c44d4f7-c9cd-4f9d-8e64-4a6677f85145")
             this[1].assertEquals(150, "Another obscure artist", "Another obscure album", "")
             this[2].assertEquals(110, "Some obscure artist", "Obscure album", "")
         }
 
-        assertEquals(Season.AUTUMN, aggregatedChart[1].season)
-        with(aggregatedChart[1].list) {
-            assertEquals(3, size)
+        assertNotNull(aggregatedChart[Season.AUTUMN])
+        with(aggregatedChart[Season.AUTUMN]) {
+            assertEquals(3, this!!.size)
             this[0].assertEquals(300, "John Frusciante", "Shadows Collide With People", "0c18d5dd-3e3d-459c-b647-80734819d072")
             this[1].assertEquals(51, "Red Hot Chili Peppers", "I'm With You", "1913928d-2516-4a0a-8095-9f9e5747fe58")
             this[2].assertEquals(15, "Radiohead", "OK Computer", "0b6b4ba0-d36f-47bd-b4ea-6a5b91842d29")
         }
 
-        assertEquals(Season.WINTER, aggregatedChart[2].season)
-        with(aggregatedChart[2].list) {
-            assertEquals(2, size)
+        assertNotNull(aggregatedChart[Season.WINTER])
+        with(aggregatedChart[Season.WINTER]) {
+            assertEquals(2, this!!.size)
             this[0].assertEquals(354, "King Gizzard & The Lizard Wizard", "K.G", "48acfcf1-8114-44a9-b45b-f828a8fcce87")
             this[1].assertEquals(197, "Radiohead", "OK Computer", "0b6b4ba0-d36f-47bd-b4ea-6a5b91842d29")
         }
 
-        assertEquals(Season.SPRING, aggregatedChart[3].season)
-        assertEquals(0, aggregatedChart[3].list.size)
+        assertNotNull(aggregatedChart[Season.SPRING])
+        assertEquals(0, aggregatedChart[Season.SPRING]!!.size)
     }
 
     private fun makeSeasonsChart() =
