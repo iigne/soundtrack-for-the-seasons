@@ -1,7 +1,6 @@
 # Soundtracks for the seasons 🌸🌞🍂❄️
 
-A small CLI tool that generates statistics about your Last.fm listening habits based on the seasons!
-
+A small Kotlin CLI tool that generates statistics about your Last.fm listening habits based on the seasons!
 Made for nostalgic data and music nerds who really feel the seasons.
 
 ## Usage instructions
@@ -64,11 +63,8 @@ Format is JSON that looks like:
 
 ## Next steps
 
-- [ ] Testing
-    - [x] `SeasonService`
-    - [ ] `ChartAggregationService`
 - [ ] Refactoring + resolve TODOs
-- [ ] Select season
+- [ ] Being able to select season
 - [ ]  Turn this into API?
      -  OR this could be a lambda function + API gateway
 - [ ]  Add a FE
