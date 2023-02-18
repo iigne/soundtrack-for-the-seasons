@@ -1,6 +1,5 @@
 import api.ChartType
-import api.LastFmApi
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import api.LastFmApiService
 import java.time.Clock
 
 //args description:
@@ -13,14 +12,13 @@ val DEFAULT_TYPE = ChartType.ALBUM
 fun main(args: Array<String>) {
     
     //resolve inputs
-    val apiKey = getApiKey()
     val username = extractArg(args, 0)
     val limit = extractIntArg(args, 1, DEFAULT_LIMIT)
     val type = extractChartTypeArg(args, 2, DEFAULT_TYPE)
 
     println("args: username $username, limit $limit, type $type")
     //init services
-    val api = LastFmApi(apiKey)
+    val api = LastFmApiService()
     val seasonsService = SeasonsService(api, Clock.systemDefaultZone())
     val seasonChartAggregationService = ChartAggregationService()
 
@@ -33,12 +31,8 @@ fun main(args: Array<String>) {
 
     val aggregated = seasonChartAggregationService.aggregateYearlySeasonsChart(chart, limit)
     println("Aggregated seasons chart:")
-    //TODO mapper could be in some util class
-    println(jacksonObjectMapper().writer().writeValueAsString(aggregated))
+    println(aggregated.objectToJson())
 }
-
-fun getApiKey(): String = System.getenv("LAST_FM_API_KEY")
-    .also { require(it != null) { "Last.fm API key not provided" } }
 
 fun extractArg(args: Array<String>, index: Int, defaultVal: String? = null): String {
     val extracted = extractArgOrNull(args, index) ?: defaultVal
@@ -47,7 +41,7 @@ fun extractArg(args: Array<String>, index: Int, defaultVal: String? = null): Str
 }
 
 fun extractArgOrNull(args: Array<String>, index: Int): String? =
-    args[index].takeIf { args.size - 1 >= index }
+    if (args.size - 1 >= index) args[index] else null
 
 fun extractIntArg(args: Array<String>, index: Int, defaultVal: Int? = null): Int =
     extractArg(args, index, defaultVal.toString()).toInt()

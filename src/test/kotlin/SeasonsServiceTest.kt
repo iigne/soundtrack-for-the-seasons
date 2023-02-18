@@ -1,4 +1,4 @@
-import api.LastFmApi
+import api.LastFmApiService
 import api.Registered
 import api.User
 import io.mockk.every
@@ -20,9 +20,9 @@ class SeasonsServiceTest {
         private const val TEST_USERNAME = "test_user"
     }
 
-    private val lastFmApi = mockk<LastFmApi>()
+    private val lastFmApiService = mockk<LastFmApiService>()
     private val fixedClock = Clock.fixed(FIXED_DATE.atZone(ZONE_ID).toInstant(), ZONE_ID)
-    private val seasonsService = SeasonsService(lastFmApi, fixedClock)
+    private val seasonsService = SeasonsService(lastFmApiService, fixedClock)
 
     @TestFactory
     fun getAllSeasonsForUser() = listOf(
@@ -45,7 +45,7 @@ class SeasonsServiceTest {
         makeDate(2021, 1, 1) to 9,
     ).map { (date, expectedNumberSeasons) ->
         DynamicTest.dynamicTest("Should return $expectedNumberSeasons when user's join date is $date") {
-            every { lastFmApi.getUser(TEST_USERNAME) } returns User(TEST_USERNAME, 1, makeRegistered(date))
+            every { lastFmApiService.getUser(TEST_USERNAME) } returns User(TEST_USERNAME, 1, makeRegistered(date))
             val seasons = seasonsService.getAllSeasonsForUser(TEST_USERNAME)
             assertEquals(expectedNumberSeasons, seasons.size)
         }
@@ -76,7 +76,7 @@ class SeasonsServiceTest {
 
         //when
         val registeredDate = makeDate(2019, 10, 20)
-        every { lastFmApi.getUser(TEST_USERNAME) } returns User(TEST_USERNAME, 100000, makeRegistered(registeredDate))
+        every { lastFmApiService.getUser(TEST_USERNAME) } returns User(TEST_USERNAME, 100000, makeRegistered(registeredDate))
         val seasons = seasonsService.getAllSeasonsForUser(TEST_USERNAME)
 
         //then

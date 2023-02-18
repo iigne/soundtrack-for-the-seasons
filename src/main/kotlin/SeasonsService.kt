@@ -1,11 +1,11 @@
-import api.LastFmApi
+import api.LastFmApiService
 import java.time.Clock
 import java.time.LocalDateTime
 import java.time.Month
 import java.time.Year
 
 class SeasonsService (
-    private val api: LastFmApi,
+    private val api: LastFmApiService,
     private val clock: Clock,
 ){
     /**

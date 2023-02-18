@@ -83,6 +83,7 @@ Format is JSON that looks like:
   * Handle start and end of seasons - start and end chart data is not as relevant as mid-season
 * Make this more general-purpose
   * Could use this to generate non-aggregated stats for every year
+  * Stuff like "what being 16/17/18" sounded like
   * Personal Christmas playlists if we only did songs around December!
 * Integration with Spotify
   * It would be cool to generate playlists!!!
