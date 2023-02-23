@@ -5,6 +5,8 @@ Made for nostalgic data and music nerds who really feel the seasons.
 
 ## Usage instructions
 
+### To run the application:
+
 1. Generate a Last.fm API key (follow docs https://www.last.fm/api)
 2. Export API key to environment variables:
 
@@ -23,56 +25,71 @@ export LAST_FM_API_KEY="<your api key>"
 ```shell
 ./gradlew run --args="iigne"
 ```
-or
+or if you want to specify optional arguments (limit and type):
 ```shell
-./gradlew run --args="iigne 5 TRACK"
+./gradlew run --args="iigne 1 TRACK"
 ```
 
-Output contains entry for each season and a list of most listened to items in that season,
-from highest to lowest.
-Format is JSON that looks like:
+Output contains entry for each season and a list of 15 (or number specified in args) most listened to items in that season,
+from highest to lowest. Format is JSON that looks like:
 
 ```json
-[
-  {
-    "season": "SUMMER",
-    "list": [
-      {
-        "id": "",
-        "artist": "",
-        "name": "",
-        "playcount": 0
-      },
-      ...
-    ]
-  },
-  {
-    "season": "AUTUMN",
-    "list": [...]
-  },
-  {
-    "season": "WINTER",
-    "list": [...]
-  },
-  {
-    "season": "SPRING",
-    "list": [...]
-  }
-]
+{
+  "SUMMER": [
+    {
+      "id": "",
+      "artist": "HAIM",
+      "name": "Women in Music Pt. III",
+      "playcount": 962
+    }
+  ],
+  "AUTUMN": [
+    {
+      "id": "56469ec6-b4ec-41b9-b19b-fc7369356807",
+      "artist": "Vampire Weekend",
+      "name": "Father of the Bride",
+      "playcount": 1079
+    }
+  ],
+  "WINTER": [
+    {
+      "id": "00945de3-0f0c-49ad-9709-0212c672042b",
+      "artist": "Taylor Swift",
+      "name": "evermore",
+      "playcount": 463
+    }
+  ],
+  "SPRING": [
+    {
+      "id": "2e0eb311-3691-4b9f-9c4e-9c0956b346af",
+      "artist": "The Growlers",
+      "name": "City Club",
+      "playcount": 398
+    }
+  ]
+}
+```
+
+### To run tests:
+
+Currently, there's a few small JUnit tests of the most critical functionality, that can be run with:
+
+```shell
+./gradlew test
 ```
 
 ## Next steps
 
 - [ ] Refactoring + resolve TODOs
 - [ ] Being able to select season
-- [ ]  Turn this into API?
-     -  OR this could be a lambda function + API gateway
-- [ ]  Add a FE
-     - [ ] charts response needs to have some image URL (especially for albums) 
-     - could be a React type thing or just a simple HTML page?
-- [ ]  Deploy this somewhere (like AWS)
-    - This was build with AWS Lambdas in mind, sorta
-    - FE can be a simple thingy hosted from S3 bucket
+- [ ] Turn this into API (Ktor) 
+    - OR this could be turned into a serverless function?
+- [ ]  Add a FE 
+    - [ ] charts response needs to have some image URL (especially for albums) 
+    - could be a React type thing or just a simple HTML page?
+- [ ]  Deploy this somewhere (AWS, probably)
+    - BE API on EC2 or something (or Lambda???)
+    - FE can be hosted from S3 bucket
 
 ## Future work
 * Improve the season aggregation algorithm

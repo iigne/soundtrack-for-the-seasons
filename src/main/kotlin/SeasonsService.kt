@@ -18,7 +18,7 @@ class SeasonsService (
         return getListOfSeasonsBetweenDates(registeredDate, currentDate)
     }
 
-
+    //TODO refactor this
     private fun getListOfSeasonsBetweenDates(startDate: LocalDateTime, endDate: LocalDateTime): List<YearSeason> {
         val seasons = mutableListOf<YearSeason>()
         var counter = startDate
@@ -39,6 +39,7 @@ class SeasonsService (
         return YearSeason(season, seasonStart, dateToTimestamp(seasonStart, clock.zone), seasonEnd, dateToTimestamp(seasonEnd, clock.zone))
     }
 
+    //TODO this logic feels dirty...
     private fun getSeasonStartYear(date: LocalDateTime): Int {
         if (date.month == Month.FEBRUARY || date.month == Month.JANUARY) {
             return date.year - 1
