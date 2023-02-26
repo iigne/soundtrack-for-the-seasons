@@ -11,13 +11,13 @@ class ChartAggregationServiceTest {
     private val chartAggregationService = ChartAggregationService()
 
     @Test
-    fun aggregateYearlySeasonsChart_empty() {
+    fun `Aggregate yearly seasons chart for empty map`() {
         val aggregatedChart = chartAggregationService.aggregateYearlySeasonsChart(mapOf())
         assertEquals(0, aggregatedChart.size)
     }
 
     @Test
-    fun aggregateYearlySeasonsChart_allSeasons() {
+    fun `Aggregate yearly seasons chart for map with all seasons`() {
         val aggregatedChart = chartAggregationService.aggregateYearlySeasonsChart(makeSeasonsChart(), 3)
 
         assertEquals(4, aggregatedChart.size)

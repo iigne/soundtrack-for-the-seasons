@@ -8,9 +8,6 @@ enum class Season(val months: List<Month>) {
     AUTUMN(listOf(Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER)),
 }
 
-fun getSeasonForDate(date: LocalDateTime): Season {
-    for (season in Season.values()) {
-        if (date.month in season.months) return season
-    }
-    throw IllegalStateException("Illegal date $date does not belong to a season? 🤨")
-}
+fun getSeasonForDate(date: LocalDateTime): Season =
+    Season.values().find { date.month in it.months }
+        ?: throw IllegalStateException("Illegal date $date does not belong to a season? 🤨")

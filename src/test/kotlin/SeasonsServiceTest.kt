@@ -25,7 +25,7 @@ class SeasonsServiceTest {
     private val seasonsService = SeasonsService(lastFmApiService, fixedClock)
 
     @TestFactory
-    fun getAllSeasonsForUser() = listOf(
+    fun `Get all seasons for user`() = listOf(
         makeDate(2023, 2, 15) to 1,
         makeDate(2022, 12, 1) to 1,
         makeDate(2022, 11, 30, 23) to 2,

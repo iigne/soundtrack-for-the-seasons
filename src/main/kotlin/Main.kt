@@ -2,11 +2,12 @@ import api.ChartType
 import api.LastFmApiService
 import java.time.Clock
 
-//args description:
-// 0 - username - of Last.fm user
-// 1 - limit (optional) - the higher the limit, the more items will be fetched for generating the stats,
-//      and more items will appear in the output list. Default limit is 15.
-// 2 - type (optional) - type of the stats. Can be either ALBUM, TRACK or ARTIST. Default type is ALBUM.
+/** args description:
+ * 0 - username - of Last.fm user
+ * 1 - limit (optional) - the higher the limit, the more items will be fetched for generating the stats,
+ *       and more items will appear in the output list. Default limit is 15.
+ * 2 - type (optional) - type of the stats. Can be either ALBUM, TRACK or ARTIST. Default type is ALBUM.
+ */
 const val DEFAULT_LIMIT = 15
 val DEFAULT_TYPE = ChartType.ALBUM
 fun main(args: Array<String>) {
@@ -26,7 +27,7 @@ fun main(args: Array<String>) {
     val userSeasons = seasonsService.getAllSeasonsForUser(username)
 
     val chart = api.getChartsForSeasons(type, username, userSeasons, limit)
-    println("Every year seasons chart:")
+    println("Each year's seasons chart:")
     println(chart)
 
     val aggregated = seasonChartAggregationService.aggregateYearlySeasonsChart(chart, limit)
